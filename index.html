@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <title>Covid Map</title>
+ 
+</head>
+<body>
+
+    <nav class="navbar navbar-default"></nav>
+    <div id="container" style="height: 650px; min-width: 310px; max-width: 1600px; margin: 0 auto"></div>
+
+    <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
+    <script src="https://code.highcharts.com/mapdata/custom/world.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.0.1/themes/dark-unica.min.js" integrity="sha512-N3iwX1ot8NnjZzNVZ20YPrqkMNiK59GxkMYY75in4Ubt0tKvnNhbX/LzrVePEF0DtJDULRI7HzXb3B/vpv3VuA==" crossorigin="anonymous"></script>
+
+    
+<script>
+
+Highcharts.getJSON('data.json', function (data) {
+
+    Highcharts.mapChart('container', {
+        chart: {
+            borderWidth: 1,
+            map: 'custom/world'
+        },
+
+        title: {
+            text: 'People fully vaccinated against covid-19',
+            style: {"fontSize": "30px" },
+        },
+
+        subtitle: {
+            text: 'source: Kaggle, updated 19/02/2021',
+            style: {"fontSize": "20px" },
+        },
+
+        legend: {
+            enabled: false
+        },
+
+        mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+
+        series: [{
+            name: 'Countries',
+            color: '#E0E0E0',
+            enableMouseTracking: false
+        }, {
+            type: 'mapbubble',
+            name: 'Vaccinations',
+            joinBy: ['iso-a3', 'code3'],
+            data: data,
+            minSize: 4,
+            maxSize: '20%',
+            tooltip: {
+                pointFormat: '{point.properties.iso-a3}: {point.z} people vaccinated',
+                
+            }
+        }]
+    });
+});
+
+
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.0.1/themes/dark-unica.min.js" integrity="sha512-N3iwX1ot8NnjZzNVZ20YPrqkMNiK59GxkMYY75in4Ubt0tKvnNhbX/LzrVePEF0DtJDULRI7HzXb3B/vpv3VuA==" crossorigin="anonymous"></script>
+</body>
